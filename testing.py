@@ -68,118 +68,41 @@ def addRecord(succ,idx):
 
 # Functions to display a menu to enter information about a person
 def getRace():
+   races=['American Indian or Alaska Native','Asian', \
+          'Black or African American','Hispanic or Latino', \
+          'Native Hawaiian or Other Pacific Islander','White']
    print()
-   print('1. American Indian or Alaska Native')
-   print('2. Asian')
-   print('3. Black or African American')
-   print('4. Hispanic or Latino')
-   print('5. Native Hawaiian or Other Pacific Islander')
-   print('6. White')
+   for i in range(1,7):
+      print(str(i)+'. '+races[i-1])
    r = int(input('Race: '))
-   if r==1:
-      return 'American Indian or Alaska Native'
-   elif r==2:
-      return 'Asian'
-   elif r==3:
-      return 'Black or African American'
-   elif r==4:
-      return 'Hispanic or Latino'
-   elif r==5:
-      return 'Native Hawaiian or Other Pacific Islander'
-   else:
-      return 'White'
+   return races[r-1]
 
 def getSex():
+   sexes=['Male','Female']
    print()
-   print('1. Male')
-   print('2. Female')
+   for i in range(1,3):
+      print(str(i)+'. '+sexes[i-1])
    r=int(input('Sex: '))
-   if r==1:
-      return 'Male'
-   else:
-      return 'Female'
+   return sexes[r-1]
 
 def getDistance():
+   dists=['Close (Front Camera)','Medium (Front Camera)','Far (Front Camera)', \
+          'Close (Back Camera)','Medium (Back Camera)','Far (Back Camera)']
    print()
-   print('1. Close (Front Camera)')
-   print('2. Medium (Front Camera)')
-   print('3. Far (Front Camera)')
-   print('4. Close (Back Camera)')
-   print('5. Medium (Back Camera)')
-   print('6. Far (Back Camera)')
+   for i in range(1,7):
+      print(str(i)+'. '+dists[i-1])
    r=int(input('Distance: '))
-   if r==1:
-      return 'Close (Front Camera)'
-   elif r==2:
-      return 'Medium (Front Camera)'
-   elif r==3:
-      return 'Far (Front Camera)'
-   elif r==4:
-      return 'Close (Back Camera)'
-   elif r==5:
-      return 'Medium (Back Camera)'
-   else:
-      return 'Far (Back Camera)'
+   return dists[r-1]
 
 def getAge():
+   ages=['0 years','1-4 years','5-9 years','10-14 years','15-19 years', \
+         '20-24 years','25-29 years','30-34 years','35-39 years','40-44 years', \
+         '45-49 years','50-54 years','55-59 years','60-64 years','65-69 years', \
+         '70-74 years','75-79 years','80-84 years','85+ years']
    print()
-   print('1. 0 years')
-   print('2. 1-4 years')
-   print('3. 5-9 years')
-   print('4. 10-14 years')
-   print('5. 15-19 years')
-   print('6. 20-24 years')
-   print('7. 25-29 years')
-   print('8. 30-34 years')
-   print('9. 35-39 years')
-   print('10. 40-44 years')
-   print('11. 45-49 years')
-   print('12. 50-54 years')
-   print('13. 55-59 years')
-   print('14. 60-64 years')
-   print('15. 65-69 years')
-   print('16. 70-74 years')
-   print('17. 75-79 years')
-   print('18. 80-84 years')
-   print('19. 85+ years')
+   for i in range(1,20):
+      print(str(i)+'. '+ages[i-1])
    r=int(input('Age Group: '))
-   if r==1:
-      return '0 years'
-   elif r==2:
-      return '1-4 years'
-   elif r==3:
-      return '5-9 years'
-   elif r==4:
-      return '10-14 years'
-   elif r==5:
-      return '15-19 years'
-   elif r==6:
-      return '20-24 years'
-   elif r==7:
-      return '25-29 years'
-   elif r==8:
-      return '30-34 years'
-   elif r==9:
-      return '35-39 years'
-   elif r==10:
-      return '40-44 years'
-   elif r==11:
-      return '45-49 years'
-   elif r==12:
-      return '50-54 years'
-   elif r==13:
-      return '55-59 years'
-   elif r==14:
-      return '60-64 years'
-   elif r==15:
-      return '65-69 years'
-   elif r==16:
-      return '70-74 years'
-   elif r==17:
-      return '75-79 years'
-   elif r==18:
-      return '80-84 years'
-   else:
-      return '85+ years'
+   return ages[r-1]
 
 digitalTesting()
