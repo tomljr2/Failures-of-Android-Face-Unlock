@@ -12,7 +12,7 @@ MONITOR_HEIGHT=1440
 # allow the user to input information about the person in the image.
 def digitalTesting():
    # Get the images
-   os.system('cd utils;python3 extractAndScaleFaces.py;cd ..')
+   os.system('cd utils;python3 extractFaces.py;python3 scaleFaces.py;cd ..')
    imgs = [f for f in listdir('utils/dst/') if isfile(join('utils/dst/', f))]
 
    # Resize and display each image

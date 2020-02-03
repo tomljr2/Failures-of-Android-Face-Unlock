@@ -3,7 +3,7 @@ from os import listdir
 from os.path import isfile, join
 import numpy as np
 import cv2
-os.system('cd utils;python3 extractAndScaleFaces.py;cd ..')
+os.system('cd utils;python3 extractFaces.py;python3 scaleFaces.py;cd ..')
 
 imgs = [f for f in listdir('utils/dst/') if isfile(join('utils/dst/', f))]
 
