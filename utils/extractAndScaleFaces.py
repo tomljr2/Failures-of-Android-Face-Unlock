@@ -23,10 +23,12 @@ for imgpath in imgs:
    # Extract each face and save to the dst/ directory
    i=1
    for (x,y,w,h) in faces:
-      w2 = int(abs(w-x)*0.1)
-      h2 = int(abs(h-y)*0.2)
+      w2 = int(w*0.1)
+      h2 = int(h*0.15)
       path=imgpath.split('.')
-      face = img[y-h2:y+h+h2,x-w2:x+w+w2]
+      #w2=0
+      #h2=0
+      face = img[y-3*h2:y+h+h2,x-w2:x+w+w2]
       factor=HEIGHT/face.shape[0]
       face = cv2.resize(face,(0,0),fx=factor,fy=factor)
       cv2.imwrite('dst/'+path[0]+'_'+str(i)+'.'+path[1], \
