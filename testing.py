@@ -12,7 +12,7 @@ MONITOR_HEIGHT=1440
 # allow the user to input information about the person in the image.
 def digitalTesting():
    # Get the images
-   os.system('cd utils;python3 extractFaces.py;python3 scaleFaces.py;cd ..')
+   os.system('cd utils;python3 extractFaces.py;cd ..')
    imgs = [f for f in listdir('utils/dst/') if isfile(join('utils/dst/', f))]
 
    # Resize and display each image
@@ -24,8 +24,8 @@ def digitalTesting():
       else:
          w=int(image.shape[1] *(MONITOR_HEIGHT/image.shape[0]))
          h=MONITOR_HEIGHT
-      image=cv2.resize(image,(w,h))
-      cv2.imshow('Digital Testing', image)
+      image2=cv2.resize(image,(w,h))
+      cv2.imshow(img, image2)
       cv2.waitKey(0)
       cv2.destroyAllWindows()
       succ=-1
@@ -33,7 +33,7 @@ def digitalTesting():
          succ=int(input('Number of successes: '))
          if succ > 10 or succ < 0:
             print('Error: Must be a number from 0 to 10')
-      d=getDistance()
+      d=getDistance(image)
       s=getSex()
       a=getAge()
       r=getRace()
@@ -85,12 +85,13 @@ def getSex():
    r=int(input('Sex: '))
    return sexes[r-1]
 
-def getDistance():
+def getDistance(img):
    dists=['Close (Front Camera)','Medium (Front Camera)','Far (Front Camera)', \
           'Close (Back Camera)','Medium (Back Camera)','Far (Back Camera)']
    print()
    for i in range(1,7):
       print(str(i)+'. '+dists[i-1])
+   predictDistance(img)
    r=int(input('Distance: '))
    return dists[r-1]
 
@@ -105,4 +106,19 @@ def getAge():
    r=int(input('Age Group: '))
    return ages[r-1]
 
+# Function to predict the distance based on the resolution
+def predictDistance(img):
+   expected = np.array([2290,2770,2110,2550,1710,2065,1230, \
+                        1490,760,915,325,390])
+   h,w,c=img.shape
+   current = np.array([w,h,w,h,w,h,w,h,w,h,w,h])
+   res=np.subtract(expected,current)
+   A=([1,1,0,0,0,0,0,0,0,0,0,0],
+      [0,0,1,1,0,0,0,0,0,0,0,0],
+      [0,0,0,0,1,1,0,0,0,0,0,0],
+      [0,0,0,0,0,0,1,1,0,0,0,0],
+      [0,0,0,0,0,0,0,0,1,1,0,0],
+      [0,0,0,0,0,0,0,0,0,0,1,1])
+   res=np.matmul(A,res)
+   print('Expected choice: '+str(np.argmin(np.power(res,2))+1))
 digitalTesting()

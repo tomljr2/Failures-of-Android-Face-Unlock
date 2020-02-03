@@ -22,9 +22,11 @@ for imgpath in imgs:
    for (x,y,w,h) in faces:
       w2 = int(w*0.1)
       h2 = int(h*0.15)
+      h3 = int(h*0.3)
       path=imgpath.split('.')
-      face = img[y-3*h2:y+h+h2,x-w2:x+w+w2]
-      cv2.imwrite('dst/'+path[0]+'_'+str(i)+'.'+path[1], \
-                 face)
+      face = img[y-h3:y+h+h2,x-w2:x+w+w2]
+      if face.shape[0] > 0 and face.shape[1] > 0:
+         cv2.imwrite('dst/'+path[0]+'_'+str(i)+'.'+path[1], \
+                    face)
       i+=1
 
