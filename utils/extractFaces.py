@@ -1,9 +1,6 @@
 import cv2
-from skimage.transform import rescale
 from os import listdir
 from os.path import isfile, join
-
-HEIGHT=3264
 
 # Import the cv2 trained face classifiers
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + \
@@ -26,11 +23,7 @@ for imgpath in imgs:
       w2 = int(w*0.1)
       h2 = int(h*0.15)
       path=imgpath.split('.')
-      #w2=0
-      #h2=0
       face = img[y-3*h2:y+h+h2,x-w2:x+w+w2]
-      factor=HEIGHT/face.shape[0]
-      face = cv2.resize(face,(0,0),fx=factor,fy=factor)
       cv2.imwrite('dst/'+path[0]+'_'+str(i)+'.'+path[1], \
                  face)
       i+=1
