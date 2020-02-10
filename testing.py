@@ -14,6 +14,7 @@ results=[]
 # Function to test images digitally. This will display each image and then
 # allow the user to input information about the person in the image.
 def digitalTesting(same=True):
+   os.system('cp digitalRecords.py ./backup/digitalEditionBackup.py')
    # Get the images
    os.system('cd utils;python3 extractFaces.py;cd ..')
    imgs = [f for f in listdir('utils/dst/') if isfile(join('utils/dst/', f))]
@@ -34,6 +35,7 @@ def digitalTesting(same=True):
       recordResults('digital',img,same,image)
 
 def physicalTesting():
+   os.system('cp physicalRecords.py ./backup/physicalEditionBackup.py')
    dists=['Close (Front Camera)','Medium (Front Camera)','Far (Front Camera)', \
           'Close (Back Camera)','Medium (Back Camera)','Far (Back Camera)']
    for d in dists:
@@ -45,7 +47,7 @@ def physicalTesting():
 # Record the results for different resolutions, distances, sexes,
 # ages, races, and nationalities.
 def recordResults(name,img,same,image=None,d=None):
-   os.system('cp '+name+'Records.py ./backup/'+name+'Backup.py')
+   os.system('cp '+name+'Records.py ./backup/'+name+'AdditionBackup.py')
    f=open(name+'Records.py','w')
 
    succ=int(input('Number of successes: '))
@@ -60,6 +62,8 @@ def recordResults(name,img,same,image=None,d=None):
       return
    if d == None:
       d=getDistance(image)
+
+   m=getMood()
 
    # If it's the same person, there's no need to repeat questions
    if not same:
@@ -82,12 +86,13 @@ def recordResults(name,img,same,image=None,d=None):
    print()
 
    addRecord(succ,'Totals')
-   addRecord(succ,(d,s,a,r,n))
+   addRecord(succ,(d,s,a,r,n,m))
    addRecord(succ,d)
    addRecord(succ,s)
    addRecord(succ,a)
    addRecord(succ,r)
    addRecord(succ,n)
+   addRecord(succ,m)
 
    f.write('records='+str(records))
    f.close()
@@ -139,6 +144,14 @@ def getAge():
       print(str(i)+'. '+ages[i-1])
    r=int(input('Age Group: '))
    return ages[r-1]
+
+def getMood():
+   moods=['Happy','Neutral','Sad','Angry','Surprised','Disgusted']
+   print()
+   for i in range(1,7):
+      print(str(i)+'. '+moods[i-1])
+   r=int(input('Mood: '))
+   return moods[r-1]
 
 # Function to predict the distance based on the resolution
 def predictDistance(img):
