@@ -1,5 +1,3 @@
-from digitalRecords import records
-from physicalRecords import records
 import os
 from os import listdir
 from os.path import isfile, join
@@ -14,7 +12,7 @@ results=[]
 # Function to test images digitally. This will display each image and then
 # allow the user to input information about the person in the image.
 def digitalTesting(same=True):
-   os.system('cp digitalRecords.py ./backup/digitalEditionBackup.py')
+   os.system('cp '+APP+'digitalRecords.py ./backup/'+APP+'digitalEditionBackup.py')
    # Get the images
    os.system('cd utils;python3 extractFaces.py;cd ..')
    imgs = [f for f in listdir('utils/dst/') if isfile(join('utils/dst/', f))]
@@ -35,7 +33,7 @@ def digitalTesting(same=True):
       recordResults('digital',img,same,image)
 
 def physicalTesting():
-   os.system('cp physicalRecords.py ./backup/physicalEditionBackup.py')
+   os.system('cp '+APP+'physicalRecords.py ./backup/'+APP+'physicalEditionBackup.py')
    dists=['Close (Front Camera)','Medium (Front Camera)','Far (Front Camera)', \
           'Close (Back Camera)','Medium (Back Camera)','Far (Back Camera)']
    for d in dists:
@@ -47,8 +45,8 @@ def physicalTesting():
 # Record the results for different resolutions, distances, sexes,
 # ages, races, and nationalities.
 def recordResults(name,img,same,image=None,d=None):
-   os.system('cp '+name+'Records.py ./backup/'+name+'AdditionBackup.py')
-   f=open(name+'Records.py','w')
+   os.system('cp '+APP+name+'Records.py ./backup/'+APP+name+'AdditionBackup.py')
+   f=open(APP+name+'Records.py','w')
 
    succ=int(input('Number of successes: '))
    # If something was extracted as a face, but is wrong, then
@@ -153,6 +151,15 @@ def getMood():
    r=int(input('Mood: '))
    return moods[r-1]
 
+def getApp():
+   apps=['AndroidOS','AppLock','FaceLock','IOBit']
+   print()
+   for i in range(1,5):
+      print(str(i)+'. '+apps[i-1])
+   r=int(input('App: '))
+   print()
+   return apps[r-1]
+
 # Function to predict the distance based on the resolution
 def predictDistance(img):
    try:
@@ -189,4 +196,20 @@ def mainMenu():
    elif x==4:
       os.system('cd utils;python3 physicalTesting.py;cd ..;')
 
+
+APP=getApp()
+if APP=='AndroidOS':
+   from AndroidOSdigitalRecords import records
+   from AndroidOSphysicalRecords import records
+elif APP=='AppLock':
+   from AppLockdigitalRecords import records
+   from AppLockphysicalRecords import records
+elif APP=='FaceLock':
+   from FaceLockdigitalRecords import records
+   from FaceLockphysicalRecords import records
+elif APP=='IOBit':
+   from IOBitdigitalRecords import records
+   from IOBitphysicalRecords import records
+else:
+   exit()
 mainMenu()
