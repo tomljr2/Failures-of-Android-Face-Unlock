@@ -24,9 +24,18 @@ for imgpath in imgs:
       h2 = int(h*0.15)
       h3 = int(h*0.3)
       path=imgpath.split('.')
+      print(i)
       face = img[y-h3:y+h+h2,x-w2:x+w+w2]
       if face.shape[0] > 0 and face.shape[1] > 0:
          cv2.imwrite('dst/'+path[0]+'_'+str(i)+'.'+path[1], \
                     face)
+      else:
+         cv2.imwrite('dst/'+path[0]+'_'+str(i)+'.'+path[1], \
+                    img[y:y+h,x:x+w])
+         print('Error')
       i+=1
 
+
+   if i==1:
+      cv2.imwrite('dst/'+imgpath.split('.')[0]+'_'+str(i)+'.'+path[1], \
+                    img)

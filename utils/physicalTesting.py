@@ -3,7 +3,6 @@ from os import listdir
 from os.path import isfile, join
 import numpy as np
 import cv2
-os.system('python3 extractFaces.py;')
 
 HEIGHT=3264
 

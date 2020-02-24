@@ -11,21 +11,18 @@ results=[]
 
 # Function to test images digitally. This will display each image and then
 # allow the user to input information about the person in the image.
-def digitalTesting(same=True):
+def digitalTesting(same=True,custom=False):
    os.system('cp '+APP+'digitalRecords.py ./backup/'+APP+'digitalEditionBackup.py')
    # Get the images
-   os.system('cd utils;python3 extractFaces.py;cd ..')
+   if not custom:
+      os.system('cd utils;python3 extractFaces.py;cd ..')
    imgs = [f for f in listdir('utils/dst/') if isfile(join('utils/dst/', f))]
 
    # Resize and display each image
    for img in imgs:
       image=cv2.imread('utils/dst/'+img)
-      if image.shape[0] <= image.shape[1]:
-         w=int(MONITOR_WIDTH)
-         h=int(image.shape[0] *(MONITOR_WIDTH/image.shape[1]))
-      else:
-         w=int(image.shape[1] *(MONITOR_HEIGHT/image.shape[0]))
-         h=int(MONITOR_HEIGHT)
+      w=int(image.shape[1] *(MONITOR_HEIGHT/image.shape[0]))
+      h=int(MONITOR_HEIGHT)
       image2=cv2.resize(image,(w,h))
       cv2.imshow(img, image2)
       cv2.waitKey(0)
@@ -91,6 +88,8 @@ def recordResults(name,img,same,image=None,d=None):
    addRecord(succ,r)
    addRecord(succ,n)
    addRecord(succ,m)
+
+   print(records)
 
    f.write('records='+str(records))
    f.close()
@@ -183,19 +182,28 @@ def predictDistance(img):
 def mainMenu():
    print('1. Digital Testing (Same person)')
    print('2. Digital Testing (Multiple people)')
-   print('3. Physical Testing (Same person)')
-   print('4. Generate printables')
-   print('5. Quit')
+   print('3. Custom Digital Testing (Same person / Manually extract faces)')
+   print('4. Custom Digital Testing (Multiple people / Manually extract faces)')
+   print('5. Physical Testing (Same person)')
+   print('6. Generate printables')
+   print('7. Custom printables (Manually extract faces)')
+   print('8. Quit')
    x=int(input('Choice: '))
    if x==1:
       digitalTesting()
    elif x==2:
       digitalTesting(False)
    elif x==3:
-      physicalTesting()
+      digitalTesting(True,True)
    elif x==4:
+      digitalTesting(False,True)
+   elif x==5:
+      physicalTesting()
+   elif x==6:
+      os.system('cd utils;python3 extractFaces.py;cd ..')
       os.system('cd utils;python3 physicalTesting.py;cd ..;')
-
+   elif x==7:
+      os.system('cd utils;python3 physicalTesting.py;cd ..;')
 
 APP=getApp()
 if APP=='AndroidOS':
