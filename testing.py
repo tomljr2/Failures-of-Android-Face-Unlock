@@ -3,6 +3,8 @@ from os import listdir
 from os.path import isfile, join
 import numpy as np
 import cv2
+from digitalRecords import *
+from physicalRecords import *
 
 MONITOR_WIDTH=2560.0
 MONITOR_HEIGHT=1440.0
@@ -12,7 +14,7 @@ results=[]
 # Function to test images digitally. This will display each image and then
 # allow the user to input information about the person in the image.
 def digitalTesting(same=True,custom=False):
-   os.system('cp '+APP+'digitalRecords.py ./backup/'+APP+'digitalEditionBackup.py')
+   os.system('cp digitalRecords.py ./backup/digitalEditionBackup.py')
    # Get the images
    if not custom:
       os.system('cd utils;python3 extractFaces.py;cd ..')
@@ -30,7 +32,7 @@ def digitalTesting(same=True,custom=False):
       recordResults('digital',img,same,image)
 
 def physicalTesting():
-   os.system('cp '+APP+'physicalRecords.py ./backup/'+APP+'physicalEditionBackup.py')
+   os.system('cp physicalRecords.py ./backup/physicalEditionBackup.py')
    dists=['Close (Front Camera)','Medium (Front Camera)','Far (Front Camera)', \
           'Close (Back Camera)','Medium (Back Camera)','Far (Back Camera)']
    for d in dists:
@@ -42,8 +44,8 @@ def physicalTesting():
 # Record the results for different resolutions, distances, sexes,
 # ages, races, and nationalities.
 def recordResults(name,img,same,image=None,d=None):
-   os.system('cp '+APP+name+'Records.py ./backup/'+APP+name+'AdditionBackup.py')
-   f=open(APP+name+'Records.py','w')
+   os.system('cp '+name+'Records.py ./backup/'+name+'AdditionBackup.py')
+   f=open(name+'Records.py','w')
 
    succ=int(input('Number of successes: '))
    # If something was extracted as a face, but is wrong, then
@@ -58,7 +60,7 @@ def recordResults(name,img,same,image=None,d=None):
    if d == None:
       d=getDistance(image)
 
-   m=getMood()
+#   m=getMood()
 
    # If it's the same person, there's no need to repeat questions
    if not same:
@@ -81,13 +83,14 @@ def recordResults(name,img,same,image=None,d=None):
    print()
 
    addRecord(succ,'Totals')
-   addRecord(succ,(d,s,a,r,n,m))
+   addRecord(succ,'Successes')
+   addRecord(succ,(d,s,a,r,n))
    addRecord(succ,d)
    addRecord(succ,s)
    addRecord(succ,a)
    addRecord(succ,r)
    addRecord(succ,n)
-   addRecord(succ,m)
+#   addRecord(succ,m)
 
    print(records)
 
@@ -95,12 +98,25 @@ def recordResults(name,img,same,image=None,d=None):
    f.close()
 
 def addRecord(succ,idx):
-   try:
-      if succ !=0:
+   if succ > 0 and idx=='Successes':
+      try:
+         records[idx][0]+=1
+         records[idx][1]+=1
+         records[idx][2]=records[idx][0]/records[idx][1]
+      except:
+         records[idx]=[1,1,1.0]
+   elif succ == 0 and idx=='Successes':
+      try:
+         records[idx][1]+=1
+         records[idx][2]=records[idx][0]/records[idx][1]
+      except:
+         records[idx]=[0,1,0.0]
+   else:
+      try:
          records[idx][0]+=succ
          records[idx][1]+=10
          records[idx][2]=records[idx][0]/records[idx][1]
-   except:
+      except:
          records[idx]=[succ,10,succ/10]
 
 # Functions to display a menu to enter information about a person
@@ -142,13 +158,13 @@ def getAge():
    r=int(input('Age Group: '))
    return ages[r-1]
 
-def getMood():
-   moods=['Happy','Neutral','Sad','Angry','Surprised','Disgusted']
-   print()
-   for i in range(1,7):
-      print(str(i)+'. '+moods[i-1])
-   r=int(input('Mood: '))
-   return moods[r-1]
+#def getMood():
+#   moods=['Happy','Neutral','Sad','Angry','Surprised','Disgusted']
+#   print()
+#   for i in range(1,7):
+#      print(str(i)+'. '+moods[i-1])
+#   r=int(input('Mood: '))
+#   return moods[r-1]
 
 def getApp():
    apps=['AndroidOS','AppLock','FaceLock','IOBit']
@@ -205,19 +221,4 @@ def mainMenu():
    elif x==7:
       os.system('cd utils;python3 physicalTesting.py;cd ..;')
 
-APP=getApp()
-if APP=='AndroidOS':
-   from AndroidOSdigitalRecords import records
-   from AndroidOSphysicalRecords import records
-elif APP=='AppLock':
-   from AppLockdigitalRecords import records
-   from AppLockphysicalRecords import records
-elif APP=='FaceLock':
-   from FaceLockdigitalRecords import records
-   from FaceLockphysicalRecords import records
-elif APP=='IOBit':
-   from IOBitdigitalRecords import records
-   from IOBitphysicalRecords import records
-else:
-   exit()
 mainMenu()
