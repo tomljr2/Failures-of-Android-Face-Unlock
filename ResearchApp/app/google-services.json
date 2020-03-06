@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "261340813625",
+    "firebase_url": "https://researchapp-d683a.firebaseio.com",
+    "project_id": "researchapp-d683a",
+    "storage_bucket": "researchapp-d683a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:261340813625:android:4a5765353f7678c6bcf0e8",
+        "android_client_info": {
+          "package_name": "com.example.researchapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "261340813625-ia5dijha8anldstot20utr5nkojitr6n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuREj-wMWFrYvA5JsshNaBprEG-BW_TJw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "261340813625-ia5dijha8anldstot20utr5nkojitr6n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

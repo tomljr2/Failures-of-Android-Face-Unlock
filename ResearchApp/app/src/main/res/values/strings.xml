@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">ResearchApp</string>
+    <string name="instructions">When you continue on to the next screen, the front camera\'s view
+                                will appear. Once your face is in view, the face recognition will
+                                highlight your face and instruct you to move closer or further away
+                                from the camera. Upon moving into the correct position, a picture
+                                will be taken. This process will take
+                                place three times.\n\nIf the face recognition does not properly
+                                recognize your face, there are two lines on screen that you can use
+                                to position your face such that your hairline is at the top line and
+                                the bottom of your chin is at the bottom line. You will then use the
+                                camera button on the bottom right to take a picture manually.</string>
+    <string name="text">Once you have finished, follow the on-screen instructions for the next steps.</string>
+</resources>
